@@ -1,0 +1,8 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none",
+    "editor.defaultFormatter": "Blackboxapp.blackbox",
+    "editor.defaultFoldingRangeProvider": "Blackboxapp.blackbox"
+}
