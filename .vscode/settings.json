@@ -4,5 +4,8 @@
     },
     "python.formatting.provider": "none",
     "editor.defaultFormatter": "Blackboxapp.blackbox",
-    "editor.defaultFoldingRangeProvider": "Blackboxapp.blackbox"
+    "editor.defaultFoldingRangeProvider": "Blackboxapp.blackbox",
+    "[django-html]": {
+        "editor.defaultFormatter": "junstyle.vscode-django-support"
+    }
 }

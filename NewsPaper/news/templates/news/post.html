@@ -1,0 +1,14 @@
+
+{% extends 'layout/default.html' %}
+{% load custom_filters %}
+{% block title %}Post{% endblock title %}
+{% block content %}
+<h1>{{ post.title|censor }}</h1><br>
+<span>{{ post.created_at|date:'d M Y \a\t H:i' }} by {{ post.author.user.username }}</span>
+<p>Categories: 
+    {% for category in post.categories.all %}
+        <span class='category'>{{ category }}</span>
+    {% endfor %}
+</p>
+<p>{{ post.content|censor }}</p>
+{% endblock content %}

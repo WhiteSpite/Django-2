@@ -1,0 +1,20 @@
+{% extends 'layout/default.html' %}
+{% load custom_filters %}
+{% block title %}Posts{% endblock title %}
+{% block content %}
+<span>{{ time_now|date:'d M Y'}}</span>
+<h1>Все новости ({{ posts|length }})</h1>
+{% if posts %}
+    {% for post in posts reversed %} 
+        <a href='{{ post.get_absolute_url }}{{ post.id }}' class='text-decoration-none text-reset'>
+            <h4>{{ post.title|censor }}</h4>
+        </a>    
+        <span>{{ post.created_at|date:'d M Y \a\t H:i' }} by {{ post.author.user.username }}</span><br>
+        <span>{{ post.content|truncatechars:50|censor }}</span><br>
+        <hr> 
+    {% endfor %}
+{% else %}
+    <h2>Нет новостей</h2>
+{% endif %}
+
+{% endblock content %}
