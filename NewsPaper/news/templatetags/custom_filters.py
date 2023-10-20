@@ -16,3 +16,10 @@ def censor(value):
         lenght = len(i)
         value = value.replace(i, '*' * lenght)
     return value
+
+@register.filter(name='get_parent_uri')
+def get_parent_uri(value):
+    if value[-1] == '/':
+        value = value[:-1]
+    return value[::-1].split('/', 1)[1][::-1]
+    

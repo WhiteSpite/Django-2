@@ -2,19 +2,40 @@
 {% load custom_filters %}
 {% block title %}Posts{% endblock title %}
 {% block content %}
-<span>{{ time_now|date:'d M Y'}}</span>
-<h1>Все новости ({{ posts|length }})</h1>
+<span class='date'>{{ time_now|date:'d M Y'}}</span>
+<div class='all-news--but'>
+<h1 class='all-news'>Все новости
+<div class='label-wrapper' ><span class='label'>{{ num_of_posts }}</span></div>
+</h1>
 {% if posts %}
-    {% for post in posts reversed %} 
-        <a href='{{ post.get_absolute_url }}{{ post.id }}' class='text-decoration-none text-reset'>
-            <h4>{{ post.title|censor }}</h4>
+    {% if 'search/' in request.path %}
+        <a href='{{ request.path|cut:"search/" }}' class="btn btn-primary">Hide</a>
+</div>
+        <form method="GET" class="search-form">
+            {{ filter.form }}
+            <input class="btn btn-primary" type="submit" value="Search">
+        </form>
+    {% else %} 
+        <a href=" search" class="btn btn-primary">Search</a>
+</div>
+    {% endif %} 
+    <hr class='main-hr'>
+    {% for post in posts %}
+        <a href='{% url "news:post" post.id %}' class='text-decoration-none text-reset'>
+            
+        <h4>{{ post.title|censor }}</h4>
         </a>    
-        <span>{{ post.created_at|date:'d M Y \a\t H:i' }} by {{ post.author.user.username }}</span><br>
+        <span>{{ post.created_at|date:'d M Y \a\t H:i' }} by {{ post.author.user.username }} | Rating: {{ post.rating }}</span><br>
         <span>{{ post.content|truncatechars:50|censor }}</span><br>
         <hr> 
     {% endfor %}
 {% else %}
     <h2>Нет новостей</h2>
 {% endif %}
+
+{% include 'news/parts/paginator.html' %}
+
+<a class="btn btn-primary add-button" href="{% url 'news:post_create' %}">Add post</a>
+ 
 
 {% endblock content %}

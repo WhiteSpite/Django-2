@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'news',
     'accounts',
     'mc_donalds',
+    'django_filters',
+    'spurl'
 ]
 
 MIDDLEWARE = [

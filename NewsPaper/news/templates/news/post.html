@@ -1,9 +1,11 @@
-
 {% extends 'layout/default.html' %}
 {% load custom_filters %}
-{% block title %}Post{% endblock title %}
+{% block title %}{{ post.title }}{% endblock title %}
 {% block content %}
+<div class='title-container'>
+<a class='btn btn-primary back-button' href='{{ request.path|get_parent_uri }}'>❰</a>
 <h1>{{ post.title|censor }}</h1><br>
+</div>
 <span>{{ post.created_at|date:'d M Y \a\t H:i' }} by {{ post.author.user.username }}</span>
 <p>Categories: 
     {% for category in post.categories.all %}
@@ -11,4 +13,6 @@
     {% endfor %}
 </p>
 <p>{{ post.content|censor }}</p>
+<a href='{% url "news:post_edit" post.id %}' class="btn btn-primary">Edit</a>
+<a href='{% url "news:post_delete" post.id %}' class="btn btn-primary">Delete</a>
 {% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'layout/default.html' %}
+{% block title %}Delete post{% endblock title %}
+{% load custom_filters %}
+{% block content %}
+<div class='title-container'>
+  <a class='btn btn-primary back-button' href='{{ request.path|get_parent_uri }}'>❰</a>
+  <h1 class="title">Are you sure you want to delete this post?</h1>
+</div>
+<h4>{{ post.title|censor }}</h4>
+<form method="POST">
+    {% csrf_token %}
+      <input class="btn btn-primary" type="submit" value="Delete">
+</form>
+{% endblock content %}

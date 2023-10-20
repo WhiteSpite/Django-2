@@ -1,0 +1,15 @@
+{% extends 'layout/default.html' %}
+{% block title %}Edit post{% endblock title %}
+{% load custom_filters %}
+{% block content %}
+<div class='title-container'>
+    <a class='btn btn-primary back-button' href='{{ request.path|get_parent_uri }}'>❰</a>
+    <h1 class="title">Edit your post</h1>
+</div>
+
+<form method="POST" class="create-form">
+    {% csrf_token %}
+    {{ form }}
+    <input class="btn btn-success btn-primary but-bot" type="submit" value="Edit">
+ </form>
+{% endblock content %}
