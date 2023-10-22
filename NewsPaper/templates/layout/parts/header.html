@@ -14,8 +14,16 @@
         </ul>
        
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
+          {% if user.is_authenticated %}
+            {% if 'authors' in groups %}
+              <a href="{% url 'news:become_common' %}" class="btn btn-outline-light me-2 author"></a>
+            {% else %}
+              <a href="{% url 'news:become_author' %}" class="btn btn-outline-light me-2 reader"></a>
+            {% endif %}
+            <a href="{% url 'account_logout' %}" class="btn btn-warning user">{{ user.username }}</a>
+          {% else %}
+            <a href="{% url 'account_login' %}" class="btn btn-warning">Login</a>
+          {% endif %}
         </div>
       </div>
     </div>

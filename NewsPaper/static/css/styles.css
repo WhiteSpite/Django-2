@@ -105,17 +105,40 @@
 
 .title-container {
     position: relative;
-    height: 99px;
 }
 
 .back-button {
     position: absolute;
-    bottom: 44px;
+    top: 6px;
     left: -47px;
     color: #FFC007;
     padding: 0 12px;
     font-size: 31px;
 }
+
+.reader::before {
+    content: 'Common';
+}
+
+.reader:hover::before {
+    content: 'Became author';
+}
+
+.author::before {
+    content: 'Author';
+}
+
+.author:hover::before {
+    content: 'Became common';
+}
+
+.user:hover::before {
+    content: 'Log out ';
+}
+
+
+
+
 
 
 
