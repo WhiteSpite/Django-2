@@ -26,11 +26,36 @@
     justify-content: center;
 }
 
-.category {
+.category, .category:active, .category:hover, .category:visited {
     background-color: #323638e6;
     border-radius: 20px;
     padding: 3px 15px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.category.subscribed {
+    background-color: #FFC007;
+    color: black;
+    &:hover {
+        background-color: #323638e6;
+        color: #e5e4e2;
+        &::before {
+            content: 'Unsubscribe to ';
+        }  
+    }   
+}
+
+.category.unsubscribed {
+    background-color: #323638e6;
     color: #e5e4e2;
+    &:hover {
+        background-color: #FFC007;
+        color: black;
+        &::before {
+            content: 'Subscribe to ';
+        }  
+    }
 }
 
 .date {

@@ -9,7 +9,11 @@
 <span>{{ post.created_at|date:'d M Y \a\t H:i' }} by {{ post.author.user.username }}</span>
 <p>Categories: 
     {% for category in post.categories.all %}
-        <span class='category'>{{ category }}</span>
+        {% if category.name in subscriptions %}
+            <a href="{% url 'news:unsubscribe_to' %}?category={{ category.name }}" class='category subscribed'>{{ category }}</a>
+        {% else %}
+            <a href="{% url 'news:subscribe_to' %}?category={{ category.name }}" class='category unsubscribed'>{{ category }}</a>
+        {% endif %}
     {% endfor %}
 </p>
 <p>{{ post.content|censor }}</p>

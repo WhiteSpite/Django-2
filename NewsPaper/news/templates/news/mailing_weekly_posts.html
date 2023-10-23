@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load custom_filters %}
+    <title>Document</title>
+</head>
+<body>
+    <h2>Hello, {{ username }}. Posts of the {{ category }} category for the last week:</h2>
+    <hr>
+    {% for post in  posts %}
+        <a href="{% url 'news:post' post.id %}" class="text-decoration-none text-reset"><h3>{{ post.title|truncatechars:50|censor }}</h3></a>
+        <p>{{ post.content|truncatechars:100|censor }}</p>
+        <hr>
+    {% endfor %}  
+</body>
+</html>

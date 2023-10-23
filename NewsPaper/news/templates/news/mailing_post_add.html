@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load custom_filters %}
+    <title>Document</title>
+</head>
+<body>
+    <h3>Hello, {{ username }}. New <a href="{% url 'news:post' post.id %}" class="text-decoration-none text-reset">post</a> in your favorite category!</h3>
+    <p>{{ post.content|truncatechars:50|censor }}</p> 
+</body>
+</html>

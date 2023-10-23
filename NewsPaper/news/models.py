@@ -1,6 +1,16 @@
 from django.db.models import *
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.core.exceptions import ValidationError
+from django.utils import timezone
+
+
+def validate_user_post_limit(user):
+    start_time = timezone.now() - timezone.timedelta(days=1)
+    news_count = Post.objects.filter(author=user, created_at__gte=start_time).count()
+
+    if news_count >= 3:
+        raise ValidationError("Превышено ограничение на количество публикаций новостей.")
 
 
 class Author(Model):
@@ -22,23 +32,19 @@ class Author(Model):
 
 class Category(Model):
     name = CharField(max_length=255, unique=True)
+    subscribers = ManyToManyField(User, related_name='subscriptions')
 
     def __str__(self):
         return f'{self.name}'
 
 
-class PostCategory(Model):
-    post = ForeignKey('Post', on_delete=CASCADE)
-    category = ForeignKey(Category, on_delete=CASCADE)
-
-
 class Post(Model):
-    author = ForeignKey(Author, on_delete=CASCADE, related_name='posts')
+    author = ForeignKey(Author, on_delete=CASCADE, related_name='posts', validators=[validate_user_post_limit])
     post_type_choices = [('article', 'Article'), ('news', 'News')]
     post_type = CharField(max_length=10, choices=post_type_choices)
     created_at = DateTimeField(auto_now_add=True)
-    categories = ManyToManyField(Category, through=PostCategory, default=[])
     title = CharField(max_length=255)
+    categories = ManyToManyField(Category, related_name='posts')
     content = TextField()
     rating = IntegerField(default=0)
 
