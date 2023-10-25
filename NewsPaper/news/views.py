@@ -1,16 +1,14 @@
-from typing import Any
-from django.forms.models import BaseModelForm
-from django.http import HttpRequest, HttpResponse
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
+from django.core.cache import cache
 from datetime import datetime
 from .filters import PostFilter
-from .models import Post, Category, User, Author
+from .models import Post, Category, Author
 from .forms import PostForm
 
 
@@ -47,6 +45,13 @@ class PostDetail(DetailView):
         context['subscriptions'] = [
             category.name for category in self.request.user.subscriptions.all()]
         return context
+    
+    def get_object(self):
+        obj = cache.get(f'product-{self.kwargs["pk"]}', None)
+        if not obj:
+            obj = super().get_object(queryset=self.queryset) 
+            cache.set(f'product-{self.kwargs["pk"]}', obj)
+        return obj
 
 
 class PostEdit(PermissionRequiredMixin, UpdateView):

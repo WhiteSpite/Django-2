@@ -1,2 +1,3 @@
-a = '111'
-print(a[:30])
+
+a = 'fkkl %.2f' % 2
+print(a)
